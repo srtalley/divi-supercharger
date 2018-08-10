@@ -1,6 +1,6 @@
 <?php
 // GitHub: https://github.com/srtalley/dustysun-wp-settings-api
-// Version 1.1.1
+// Version 1.1.9
 // Author: Steve Talley
 // Organization: Dusty Sun
 // Author URL: https://dustysun.com/
@@ -11,8 +11,7 @@
 // Include the admin panel page
 // https://github.com/kmhcreative/icon-picker
 
-namespace Dusty_Sun\WP_Settings_API\v1;
-
+namespace DustySun\WP_Settings_API\v1_2;
 /* To use this library, create a new class object and pass the complete path and name of a JSON file, or place a JSON file named ds_wp_settings_api.json in the same directory as this file.
 
 You should also have a views directory in the same directory as this file, and any PHP files that have the same name as the section will be displayed on those tabs.
@@ -30,8 +29,8 @@ $ds_settings_page = new \Dusty_Sun\WP_Settings_API\v1\DustySun_WP_Settings_API($
 
 */
 
-if(!class_exists('DustySun_WP_Settings_API'))  { class DustySun_WP_Settings_API {
-
+if(!class_exists('DustySun\WP_Settings_API\v1_2\SettingsBuilder'))  { class SettingsBuilder {
+	
 	private $ds_wp_api_settings_init_data;
 
 	private $ds_wp_settings_json;
@@ -50,7 +49,6 @@ if(!class_exists('DustySun_WP_Settings_API'))  { class DustySun_WP_Settings_API 
 
 	// Create the object
 	public function __construct($data = null) {
-
 		// Read the settings init data
 		$this->set_ds_wp_api_settings_init_data($data);
 
@@ -119,6 +117,7 @@ if(!class_exists('DustySun_WP_Settings_API'))  { class DustySun_WP_Settings_API 
 			'plugin_uri' => '',
 			'page_hook' => '',
 			'page_slug' => '',
+			'plugin_slug' => '',
 			'support_uri' => '',
 			'support_email' => '',
 			'version' => '',
@@ -131,6 +130,11 @@ if(!class_exists('DustySun_WP_Settings_API'))  { class DustySun_WP_Settings_API 
 				$this->plugin_settings[$ds_default_plugin_option_key] = $ds_default_plugin_option;
 			} // end if
 		} // end foreach
+
+		// set the plugin_slug key to the page_slug key if plugin_slug is not set
+		if($this->plugin_settings['plugin_slug'] == '') {
+			$this->plugin_settings['plugin_slug'] = $this->plugin_settings['page_slug'];
+		} // end if($this->plugin_settings['plugin_slug'] == '')
 
 		// now check for an existing unique ID which we store in a separate key
 		$ds_plugin_settings_unique_id_key = $this->plugin_settings['plugin_domain'] . '_uid';
@@ -165,7 +169,7 @@ if(!class_exists('DustySun_WP_Settings_API'))  { class DustySun_WP_Settings_API 
 			} // end if
 
 			// Register admin scripts
-			add_action( 'admin_enqueue_scripts', array( $this, 'register_ds_wp_settings_api_admin_styles_scripts' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'register_ds_wp_settings_api_admin_styles_scripts' ), 1, 1 );
 
 			// check if the reset_defaults flag was set and clear the existing options if so
 			// set the ds_wp_settings_api_messages value for another function to use
@@ -210,7 +214,8 @@ if(!class_exists('DustySun_WP_Settings_API'))  { class DustySun_WP_Settings_API 
 			// Add the color picker css file
 			wp_enqueue_style( 'wp-color-picker' );
 
-			wp_register_style('ds-wp-settings-api-fontawesome', plugins_url('/css/font-awesome.min.css', __FILE__));
+			// Sync this version with the latest supported version for fontawesome-iconpicker
+			wp_register_style('ds-wp-settings-api-fontawesome', 'https://use.fontawesome.com/releases/v5.1.1/css/all.css', '5.1.1');
 			wp_enqueue_style('ds-wp-settings-api-fontawesome');
 
 			wp_register_style('ds-wp-settings-api-fontawesome-iconpicker', plugins_url('/css/fontawesome-iconpicker.min.css', __FILE__));
@@ -269,7 +274,7 @@ if(!class_exists('DustySun_WP_Settings_API'))  { class DustySun_WP_Settings_API 
 		$reset_html = '<h2>RESET ALL SETTINGS</h2>
 		  <h4>Caution: This will reset all plugin settings to default values.</h4>
 
-		  <form id="ds-wp-settings-reset" action="<?php echo $ds_wc_api_url; ?>" method="POST">
+		  <form id="ds-wp-settings-reset" action="#" method="POST">
 		    <div class="ds-wp-settings-api-ajax-form">
 						<div class="ds-wp-settings-api-ajax-form-row"><label><input type="checkbox" id="ds_wp_settings_api_remove_data" name="ds_wp_settings_api_remove_data" value="true">Delete ALL plugin data (only use if you plan to delete the plugin as well).</label></div>
 		        <div class="ds-wp-settings-api-ajax-form-row"><input type="submit" value="Reset All Settings" /></div>

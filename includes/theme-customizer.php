@@ -3,9 +3,11 @@
 * Contains methods for customizing the theme customization screen.
 *
 * @link http://codex.wordpress.org/Theme_Customization_API
-* @since DUSTY SUN SUPERCHARGER PLUGIN 1.0
+* @since DUSTY SUN DIVI SUPERCHARGER PLUGIN 1.0
 */
-class DSEDIVI_Theme_Customizer {
+namespace DustySun\Divi_Supercharger\Theme_Customizer\v1;
+
+if(!class_exists('DustySun\Divi_Supercharger\Theme_Customizer\v1\Build_Theme_Customizer'))  { class Build_Theme_Customizer {
 
   private $customizer_css;
   private $customizer_js;
@@ -543,5 +545,5 @@ class DSEDIVI_Theme_Customizer {
     }
   return $return;
   }
-} // end class DSEDIVI_Theme_Customizer
-$ds_edivi_theme_customizer = new DSEDIVI_Theme_Customizer();
+}} // end class DSEDIVI_Theme_Customizer
+$ds_edivi_theme_customizer = new Build_Theme_Customizer();

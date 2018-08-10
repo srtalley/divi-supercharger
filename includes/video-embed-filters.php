@@ -1,7 +1,7 @@
 <?php
-namespace DS_Divi_Supercharger\VideoEmbedding\v1;
+namespace DustySun\Divi_Supercharger\VideoEmbedding\v1;
 
-if(!class_exists('OembedFilters'))  { class OembedFilters {
+if(!class_exists('DustySun\Divi_Supercharger\VideoEmbedding\v1\OembedFilters'))  { class OembedFilters {
 
   public function __construct() {
     //Filter vimeo videos
@@ -9,7 +9,6 @@ if(!class_exists('OembedFilters'))  { class OembedFilters {
   }
 
   public function ds_edivi_video_embed_fetch_url( $provider, $url, $args ) {
-    $this->wl('oembed called' );
 
     //check if the global options are set
     $ds_edivi_video_options = get_option('ds_edivi_general_settings_options', true)['remove_video_titles'];
@@ -47,16 +46,11 @@ if(!class_exists('OembedFilters'))  { class OembedFilters {
      * @var array $query_args
      */
     parse_str( $php_url_query, $query_args );
-
-    $this->wl($query_args);
-
-
         if($ds_edivi_video_options == 'remove') {
           $query_args['title'] = 0;
           $query_args['portrait'] = 0;
           $query_args['byline'] = 0;
         }
-    $this->wl($query_args);
     // You can find the list of defaults providers in WP_oEmbed::__construct()
     if ( strpos( $provider, 'vimeo.com' ) !== false) {
         // Check the full list of args here: https://developer.vimeo.com/apis/oembed

@@ -1,5 +1,5 @@
 /* ADMIN STYLES */
-/* v1.0.7 */
+/* v1.1.9 */
 #ds-wp-settings-logo {
   max-height: 100px;
   width:auto;
@@ -40,19 +40,26 @@
 .ds-wp-settings-flex-columns {
   display: flex;
   flex-direction: row;
-  flex-wrap:nowrap;
-}
-.ds-wp-settings-flex-columns > div {
-  margin-right: 20px;
-}
-.ds-wp-settings-flex-columns > div:last-of-type {
-  margin-right: 0;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .ds-wp-settings-flex-columns .ds-wp-settings-one-third {
-  width: 33.3333%;
+  width: 33%
 }
 .ds-wp-settings-flex-columns .ds-wp-settings-two-thirds {
-  width: 66.6666%;
+  width: 66%;
+}
+.ds-wp-settings-flex-columns .ds-wp-settings-one-half {
+  width: 49.5%;
+}
+.ds-wp-settings-flex-columns .ds-wp-settings-one-quarter {
+  width: 24.5%;
+}
+.ds-wp-settings-flex-columns .ds-wp-settings-three-quarters {
+  width: 74.5%;
+}
+.ds-wp-settings-flex-columns .ds-wp-settings-full-width {
+  width: 100%;
 }
 .ds-wp-settings-vertical-align {
   display: flex;
@@ -99,7 +106,7 @@
 }
 .ds-wp-settings-api-share-box {
   background-color: #f7f7f7;
-  padding: 0 20px;
+  padding: 10px 20px;
   margin: 10px 0;
   border-radius: 20px;
   justify-content: center;
@@ -448,13 +455,20 @@
     margin-bottom: 10px;
   }
   .ds-wp-settings-flex-columns .ds-wp-settings-two-thirds,
-  .ds-wp-settings-flex-columns .ds-wp-settings-one-third {
-    width: 100%;
+  .ds-wp-settings-flex-columns .ds-wp-settings-one-third,
+  .ds-wp-settings-flex-columns .ds-wp-settings-one-half,
+  .ds-wp-settings-flex-columns .ds-wp-settings-one-quarter,
+  .ds-wp-settings-flex-columns .ds-wp-settings-three-quarters {
+    flex: 1 1 100%;
   }
   .ds-wp-settings-logo-display {
     display: none;
   }
   .ds-wp-settings-logo-display img {
     max-height:128px;
+  }
+  .ds-wp-settings-api-admin-title h1 {
+    font-size: 24px;
+    line-height: 28px;
   }
 } /* end max-width 767px */
