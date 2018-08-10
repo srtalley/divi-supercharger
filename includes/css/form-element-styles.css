@@ -1,0 +1,9 @@
+body.divi-supercharger input[type="submit"], button{
+    position: relative;
+    padding: 0.2em 1em;
+    border: 2px solid;
+    line-height: 1.7em !important;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    transition: all 0.2s;
+}

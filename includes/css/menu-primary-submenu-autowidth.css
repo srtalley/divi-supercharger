@@ -1,0 +1,17 @@
+@media only screen and (min-width: 981px) {
+    body.divi-supercharger #top-menu li ul.sub-menu {
+    width: auto;
+    }
+    body.divi-supercharger #top-menu ul.sub-menu li {
+    padding: 0 12px;
+    }
+    body.divi-supercharger #top-menu li li a {
+    padding-left: 15px;
+    padding-right: 15px;
+    white-space: nowrap;
+    }
+    body.divi-supercharger #top-menu ul.sub-menu li,
+    body.divi-supercharger #top-menu ul.sub-menu li a {
+    width: 100%;
+    }
+}/* end media min width 981 px */

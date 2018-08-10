@@ -1,0 +1,62 @@
+body.divi-supercharger a.et_pb_lightbox_image {
+    display:block;
+    position: relative;
+}
+body.divi-supercharger .jr-insta-thumb ul.thumbnails li a {
+    position: relative;
+    display: inline-block;
+    vertical-align: top !important;
+    width: 100%;
+}
+body.divi-supercharger a.entry-featured-image-url:before,
+body.divi-supercharger a.entry-featured-image-url:after,
+body.divi-supercharger a.et_pb_lightbox_image:before,
+body.divi-supercharger a.et_pb_lightbox_image:after,
+body.divi-supercharger .jr-insta-thumb ul.thumbnails li a:before,
+body.divi-supercharger .jr-insta-thumb ul.thumbnails li a:after {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 8px;
+    bottom: 8px;
+    content: '';
+    opacity: 0;
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+}
+body.divi-supercharger .jr-insta-thumb ul.thumbnails li a:before,
+body.divi-supercharger .jr-insta-thumb ul.thumbnails li a:after {
+    top: 5px;
+    right: 5px;
+    bottom: 5px;
+    left: 5px;
+}
+body.divi-supercharger a.entry-featured-image-url:before,
+body.divi-supercharger a.et_pb_lightbox_image:before,
+body.divi-supercharger .jr-insta-thumb ul.thumbnails li a:before {
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    -webkit-transform: scale(0,1);
+    transform: scale(0,1);
+}
+body.divi-supercharger a.entry-featured-image-url:after,
+body.divi-supercharger a.et_pb_lightbox_image:after,
+body.divi-supercharger .jr-insta-thumb ul.thumbnails li a:after {
+    border-right: 1px solid #fff;
+    border-left: 1px solid #fff;
+    -webkit-transform: scale(1,0);
+    transform: scale(1,0);
+}
+body.divi-supercharger a.entry-featured-image-url:hover:after,
+body.divi-supercharger a.entry-featured-image-url:hover:before,
+body.divi-supercharger a.et_pb_lightbox_image:hover:after,
+body.divi-supercharger a.et_pb_lightbox_image:hover:before,
+body.divi-supercharger .jr-insta-thumb ul.thumbnails li a:hover:after,
+body.divi-supercharger .jr-insta-thumb ul.thumbnails li a:focus:after,
+body.divi-supercharger .jr-insta-thumb ul.thumbnails li a:hover:before,
+body.divi-supercharger .jr-insta-thumb ul.thumbnails li a:focus:before {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    z-index: 999;
+}

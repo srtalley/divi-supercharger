@@ -1,0 +1,23 @@
+@media only screen and (min-width: 981px) {
+    body.divi-supercharger #top-menu-nav #top-menu > li {
+        transition: padding 0.4s ease-in-out;
+    }
+    body.divi-supercharger #top-menu>li,
+    body.divi-supercharger #top-menu>li:last-child {
+        padding-left: 11px;
+        padding-right: 11px;
+    }
+    body.divi-supercharger #top-menu>li:first-of-type { padding-left: 0; }
+    body.divi-supercharger #et_top_search {
+        width: 0;
+        transition: 0.4s ease-in-out;
+    }
+    body.divi-supercharger #top-menu li ul.sub-menu { left: 0; }
+
+    body.divi-supercharger.et_header_style_left #et-top-navigation,
+    body.divi-supercharger.et_header_style_split #et-top-navigation,
+    body.divi-supercharger.et_header_style_left .et-fixed-header #et-top-navigation,
+    body.divi-supercharger.et_header_style_split .et-fixed-header #et-top-navigation {
+        padding-top: 0;
+    }
+} /* end media min width 981 px */
