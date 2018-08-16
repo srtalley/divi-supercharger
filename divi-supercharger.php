@@ -11,8 +11,8 @@ License: GPLv2
 */
 
 namespace DustySun\Divi_Supercharger;
-use \DustySun\WP_Settings_API\v1_2 as DSWPSettingsAPI;
-use \DustySun\WP_License_Agent\Updater\v1_4 as WPLA;
+use \DustySun\WP_Settings_API\v2 as DSWPSettingsAPI;
+use \DustySun\WP_License_Agent\Client\v1_5 as WPLA;
 use \DustySun\Divi_Supercharger\VideoEmbedding\v1 as VideoEmbed;
 
 //Include the admin panel page
@@ -32,9 +32,6 @@ class Enhanced_Divi {
   private $ds_edivi_video_embed_filters;
 
   public function __construct() {
-
-    // set the default settings
-    register_activation_hook( __FILE__, array($this, 'ds_edivi_default_settings' ));
     
     // auto update
     add_action('plugins_loaded', array($this, 'ds_wpla_build_update_checker') );
@@ -47,6 +44,8 @@ class Enhanced_Divi {
     // Register scripts
     add_action( 'wp_enqueue_scripts', array( $this, 'ds_edivi_register_styles_scripts' ) );
 
+    // set the default settings
+    register_activation_hook( __FILE__, array($this, 'ds_edivi_default_settings' ));
   } // end public function __construct
 
   public function ds_edivi_get_current_settings() {
@@ -60,12 +59,16 @@ class Enhanced_Divi {
     // get the settings
     $this->current_settings = $this->ds_edivi_settings_obj->get_current_settings();
     // Get the plugin options
-    $this->ds_edivi_plugin_options = $this->ds_edivi_settings_obj->get_plugin_options();
+    $this->ds_edivi_main_settings = $this->ds_edivi_settings_obj->get_main_settings();
   } // end function ds_wpla_get_current_settings
 
   public function ds_edivi_default_settings() {
+    // Must be called after the settings_obj is set
+    if(!$this->ds_edivi_settings_obj || $this->ds_edivi_settings_obj == '') {
+      $this->ds_edivi_get_current_settings();
+    } // end if
     $this->ds_edivi_settings_obj->set_current_settings(true);
-    $this->ds_edivi_settings_obj->set_plugin_options(true);
+    $this->ds_edivi_settings_obj->set_main_settings(true);
   } // end function ds_edivi_default_settings()
 
   public function ds_edivi_register_styles_scripts() {
@@ -79,8 +82,8 @@ class Enhanced_Divi {
   public function ds_wpla_build_update_checker() {
 
     $settings = array(
-      'update_url' => $this->ds_edivi_plugin_options['wpla_update_url'],
-      'update_slug' => $this->ds_edivi_plugin_options['plugin_slug'],
+      'update_url' => $this->ds_edivi_main_settings['wpla_update_url'],
+      'update_slug' => $this->ds_edivi_main_settings['item_slug'],
       'main_file' => __FILE__,
       'news_widget' => true,
       'puc_errors' => true

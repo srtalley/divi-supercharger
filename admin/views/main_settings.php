@@ -38,7 +38,7 @@
           <p>This plugin adds a ton of features to the Theme Customizer. Simply open the <a href="<?php echo site_url();?>/wp-admin/customize.php">Theme Customizer</a> and choose the Divi SUPERCHARGER Options section, which will open a ton of options for you.</p>
           <p>Of course, on this page you can also set whether the plugin options are stored globally for all your Divi themes (parent and child) or if they are stored separately for each theme.</p>
           <p>Finally, below you can also set your license on the license tab.</p>
-            <p>Need detailed help? No problem! Check the <a href="?page=<?php echo $this->plugin_settings['page_slug'];?>&amp;tab=ds_edivi_help">help tab</a> below for step-by-step instructions.</p>
+            <p>Need detailed help? No problem! Check the <a href="?page=<?php echo $this->main_settings['page_slug'];?>&amp;tab=ds_edivi_help">help tab</a> below for step-by-step instructions.</p>
 
       </div>
       <div>

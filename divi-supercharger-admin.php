@@ -1,7 +1,7 @@
 <?php
 
 namespace DustySun\Divi_Supercharger;
-use \DustySun\WP_Settings_API\v1_2 as DSWPSettingsAPI;
+use \DustySun\WP_Settings_API\v2 as DSWPSettingsAPI;
 
 class Enhanced_Divi_Settings {
 
@@ -11,7 +11,7 @@ class Enhanced_Divi_Settings {
 
 	private $ds_edivi_settings = array();
 
-	private $ds_edivi_plugin_options = array();
+	private $ds_edivi_main_settings = array();
 
 	private $ds_edivi_theme_customizer;
 
@@ -53,7 +53,7 @@ class Enhanced_Divi_Settings {
 		$this->ds_edivi_settings = $this->ds_edivi_settings_page->get_current_settings();
 
 		// Get the plugin options
-		$this->ds_edivi_plugin_options = $this->ds_edivi_settings_page->get_plugin_options();
+		$this->ds_edivi_main_settings = $this->ds_edivi_settings_page->get_main_settings();
 	} // end function ds_edivi_create_admin_page
 
 	// Adds admin menu under the Sections section in the Dashboard
@@ -86,7 +86,7 @@ class Enhanced_Divi_Settings {
 	public function ds_edivi_admin_notices() {
 
 		if( get_transient( 'ds_edivi_updated' ) ) {
-			echo '<div class="notice notice-success">' . __( 'Thanks for updating Contact Form 7 SUPERCHARGER!', 'ds_edivi' ) . '</div>';
+			echo '<div class="notice notice-success"><p>' . __( 'Thanks for updating Contact Form 7 SUPERCHARGER!', 'ds_edivi' ) . '</p></div>';
 			delete_transient( 'ds_edivi_updated' );
 		}
 
@@ -95,40 +95,35 @@ class Enhanced_Divi_Settings {
 
 		$current_theme = wp_get_theme()->template;
 		if ( $current_theme != 'Divi' ) {
-				echo '<div class="error"><p>You have activated the <strong><a href="' . $this->ds_edivi_plugin_options['plugin_uri']  . '">' .  $this->ds_edivi_plugin_options['plugin_name'] .  '</a></strong> plugin, but you also need to install and activate the <a href="https://elegantthemes.com" target="_blank"><strong>Divi</strong></a> theme.</p></div>';
+				echo '<div class="error"><p>You have activated the <strong><a href="' . $this->ds_edivi_main_settings['item_uri']  . '">' .  $this->ds_edivi_main_settings['name'] .  '</a></strong> plugin, but you also need to install and activate the <a href="https://elegantthemes.com" target="_blank"><strong>Divi</strong></a> theme.</p></div>';
 		} // end if
 
 	} // end function ds_edivi_admin_notices
 
 	// Create the actual options page
 	public function ds_edivi_menu_options() {
-		$ds_edivi_settings_title = $this->ds_edivi_plugin_options['plugin_name'];
+		$ds_edivi_settings_title = $this->ds_edivi_main_settings['name'];
 
 		// Create the main page HTML
-		$this->ds_edivi_settings_page->build_plugin_panel($ds_edivi_settings_title);
+		$this->ds_edivi_settings_page->build_settings_panel($ds_edivi_settings_title);
 	} // end function
 
 	//function to add settings links to plugins area
 	public function ds_edivi_add_action_plugin( $actions, $plugin_file ) {
 
-			static $plugin;
+		$plugin = plugin_basename(__DIR__) . '/divi-supercharger.php';
 
-			if (!isset($plugin))
-				$plugin = plugin_basename(__DIR__) . '/divi-supercharger.php';
-				error_log($plugin);
+		if ($plugin == $plugin_file) {
 
-				if ($plugin == $plugin_file) {
+			$site_link = array('support' => '<a href="' . $this->ds_edivi_main_settings['item_uri'] . '" target="_blank">' . __('Support', $this->ds_edivi_main_settings['text_domain']) . '</a>');
+			$actions = array_merge($site_link, $actions);
 
-					$site_link = array('support' => '<a href="' . $this->ds_edivi_plugin_options['plugin_uri'] . '" target="_blank">' . __('Support', $this->ds_edivi_plugin_options['plugin_domain']) . '</a>');
-					$actions = array_merge($site_link, $actions);
-
-					if ( is_plugin_active( $plugin) ) {
-						$settings = array('settings' => '<a href="admin.php?page=' . $this->ds_edivi_plugin_options['page_slug'] . '">' . __('Settings', $this->ds_edivi_plugin_options['plugin_domain']) . '</a>');
-						$actions = array_merge($settings, $actions);
-					} //end if is_plugin_active
-
-				}
-			return $actions;
+			if ( is_plugin_active( $plugin) ) {
+				$settings = array('settings' => '<a href="admin.php?page=' . $this->ds_edivi_main_settings['page_slug'] . '">' . __('Settings', $this->ds_edivi_main_settings['text_domain']) . '</a>');
+				$actions = array_merge($settings, $actions);
+			} //end if is_plugin_active
+		}
+		return $actions;
 
 	} // end function ds_edivi_add_action_plugin
 
@@ -136,36 +131,51 @@ class Enhanced_Divi_Settings {
 
 		$update_db_flag = false;
 
-		//check the database version
+		// check the database version
+		// Try the older version first
 		$db_plugin_settings = get_option('ds_edivi_plugin_settings');
+		if($db_plugin_settings != '') {
+			// move the settings from the older key and delete it
+			delete_option('ds_edivi_plugin_settings');
+			update_option('ds_edivi_main_settings', $db_plugin_settings);
+		} else {
+			$db_plugin_settings = get_option('ds_edivi_main_settings');
+		} // end if
 
 		if($db_plugin_settings['version'] < '1.2') {
+
+			// Remove the daily_news_check cron event 
+			$timestamp = wp_next_scheduled ( $this->ds_edivi_main_settings['item_slug'] . '_daily_news_check' );
+			wp_unschedule_event($timestamp, $this->ds_edivi_main_settings['item_slug'] . '_daily_news_check');
+
 			// get the old license key option
 			$ds_edivi_update_settings = get_option('ds_edivi_update_settings_options', true);
 			if(isset($ds_edivi_update_settings['ds_edivi_update_email']) && $ds_edivi_update_settings['ds_edivi_update_email'] != '' )
 			{
-				update_option($this->ds_edivi_plugin_options['plugin_slug'] . '_wpla_license_email', $ds_edivi_update_settings['ds_edivi_update_email']);
+				update_option($this->ds_edivi_main_settings['item_slug'] . '_wpla_license_email', $ds_edivi_update_settings['ds_edivi_update_email']);
 			} // end if
 
 			if(isset($ds_edivi_update_settings['ds_edivi_update_serialnumber']) && $ds_edivi_update_settings['ds_edivi_update_serialnumber'] != '' )
 			{
-				update_option($this->ds_edivi_plugin_options['plugin_slug'] . '_wpla_license_key', $ds_edivi_update_settings['ds_edivi_update_serialnumber']);
+				update_option($this->ds_edivi_main_settings['item_slug'] . '_wpla_license_key', $ds_edivi_update_settings['ds_edivi_update_serialnumber']);
 			} // end if
 
 			// transfer the daily news check to daily license check
-			$ds_edivi_daily_news_check =  get_option($this->ds_edivi_plugin_options['plugin_slug'] . '_daily_news_check', true);
+			$ds_edivi_daily_news_check =  get_option($this->ds_edivi_main_settings['item_slug'] . '_daily_news_check', true);
 
-			update_option($this->ds_edivi_plugin_options['plugin_slug'] . '_daily_license_check', $ds_edivi_daily_news_check);
+			update_option($this->ds_edivi_main_settings['item_slug'] . '_daily_license_check', $ds_edivi_daily_news_check);
 			
 			$update_db_flag = true;
-		} else if($db_plugin_settings['version'] < $this->ds_edivi_plugin_options['version']) {
+		} //end if < 1.2
+		
+		if($db_plugin_settings['version'] != $this->ds_edivi_main_settings['version']) {
 			$update_db_flag = true;
 		} // end if 
 
 		if($update_db_flag) {
 			//update the version info stored in the DB
 			$this->ds_edivi_settings_page->wl('Updating Divi SUPERCHARGER settings in DB...');
-			$this->ds_edivi_settings_page->set_plugin_options(true);
+			$this->ds_edivi_settings_page->set_main_settings(true);
 		} // end if($update_db_flag) 
 		
    } // end function ds_edivi_upgrade_process

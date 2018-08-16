@@ -1,12 +1,12 @@
-{ "plugin_settings":{
-    "plugin_domain":"ds_edivi",
+{ "main_settings":{
+    "name":"Divi SUPERCHARGER",
+    "text_domain":"ds_edivi",
     "tabs":"true",
     "options_suffix":"_options",
     "page_suffix":"_page",
     "author":"Dusty Sun",
     "author_uri":"https://dustysun.com",
-    "plugin_name":"Divi SUPERCHARGER",
-    "plugin_uri":"https://dustysun.com/divi-supercharger/",
+    "item_uri":"https://dustysun.com/divi-supercharger/",
     "support_uri":"https://dustysun.com/wordpress-plugin-theme-support/",
     "support_email":"support@dustysun.com",
     "page_slug":"divi-supercharger",
@@ -51,21 +51,6 @@
               },
             "value":"default"
           }]
-    },
-    "ds_edivi_update_settings":{
-      "title":"Your License Info",
-      "tab_label":"License",
-      "fields":[
-        {
-          "id":"ds_edivi_update_email",
-          "label":"Email Address:",
-          "type":"text"
-        },{
-          "id":"ds_edivi_update_serialnumber",
-          "label":"Serial Number:",
-          "type":"text"
-        }
-      ]
     }
   }
 }
