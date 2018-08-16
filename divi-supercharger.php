@@ -5,7 +5,7 @@ Description: Adds great features to Divi in the Theme Customizer under Divi SUPE
 Author: Dusty Sun
 Author URI: http://dustysun.com
 Plugin URI: https://dustysun.com/divi-supercharger/
-Version: 1.2
+Version: 1.2.2
 Text Domain: ds_edivi
 License: GPLv2
 */

@@ -2,7 +2,7 @@
 Contributors: Dusty Sun, Steve Talley
 Tags: contact, form, contact form, lightbox, utm, utm tracking, hover labels, labels, ios labels, form style
 Requires at least: 4.6
-Tested up to: 4.9.7
+Tested up to: 4.9.8
 Stable tag: 1.1
 License: GPLv2
 
@@ -32,7 +32,7 @@ Divi SUPERCHARGER adds great features to your Divi installation:
 
 = Automatic installation =
 
-Simply download the plugin from your [account](https://dustysun.com/divi-supercharger/). Next navigate to the Plugins menu in WordPress and click Add New. Upload your new plugin and then activate it!
+If you don't already have the plugin installed, simply download the plugin from your [account](https://dustysun.com/my-account/). Next navigate to the Plugins menu in WordPress and click Add New. Upload your new plugin and then activate it!
 
 = Updating =
 
@@ -47,6 +47,16 @@ For help setting up and configuring this plugin please refer to our [user guide]
 To request help, simply submit a [help request](https://dustysun.com/wordpress-plugin-theme-support/) on our site.
 
 == Changelog ==
+= 1.2.2 2018-08-16 = 
+* Improvements to license update.
+
+= 1.2.1 2018-08-13 = 
+* Minor fixes.
+
+= 1.2 2018-08-14 = 
+* Improvements to the updater process.
+* CSS fixes for some elements.
+
 = 1.1 2018-07-26 =
 * Changed some code structure
 * Added new features

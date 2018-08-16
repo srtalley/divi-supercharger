@@ -86,7 +86,7 @@ class Enhanced_Divi_Settings {
 	public function ds_edivi_admin_notices() {
 
 		if( get_transient( 'ds_edivi_updated' ) ) {
-			echo '<div class="notice notice-success"><p>' . __( 'Thanks for updating Contact Form 7 SUPERCHARGER!', 'ds_edivi' ) . '</p></div>';
+			echo '<div class="notice notice-success"><p>' . __( 'Thanks for updating Divi SUPERCHARGER!', 'ds_edivi' ) . '</p></div>';
 			delete_transient( 'ds_edivi_updated' );
 		}
 
@@ -181,10 +181,12 @@ class Enhanced_Divi_Settings {
    } // end function ds_edivi_upgrade_process
 
 	public function ds_edivi_wp_upgrade_complete( $upgrader_object, $options ) {
-		$current_plugin_path_name = plugin_basename(__DIR__) . '/contact-form-7-supercharger.php';
+		$current_plugin_path_name = plugin_basename(__DIR__) . '/divi-supercharger.php';
 		if ($options['action'] == 'update' && $options['type'] == 'plugin' ){
-	   foreach($options['plugins'] as $each_plugin){
-				 set_transient('ds_edivi_updated', 1);
+			foreach($options['plugins'] as $each_plugin){
+				if ($each_plugin == $current_plugin_path_name) {
+					set_transient('ds_edivi_updated', 1);
+				} // end if ($each_plugin == $current_plugin_path_name)
 			 } // end foreach($options['plugins'] as $each_plugin)
 		 } // end if ($options['action'] == 'update' && $options['type'] == 'plugin' )
 	} // end function ds_edivi_wp_upgrade_complete
