@@ -47,19 +47,22 @@ For help setting up and configuring this plugin please refer to our [user guide]
 To request help, simply submit a [help request](https://dustysun.com/wordpress-plugin-theme-support/) on our site.
 
 == Changelog ==
-= 1.2.2 2018-08-16 = 
+= v1.2.3 2018-08-30 = 
+* Latest updater.
+
+= v1.2.2 2018-08-16 = 
 * Improvements to license update.
 
-= 1.2.1 2018-08-13 = 
+= v1.2.1 2018-08-13 = 
 * Minor fixes.
 
-= 1.2 2018-08-14 = 
+= v1.2 2018-08-14 = 
 * Improvements to the updater process.
 * CSS fixes for some elements.
 
-= 1.1 2018-07-26 =
+= v1.1 2018-07-26 =
 * Changed some code structure
 * Added new features
 
-= 1.0 2018-05-12 =
+= v1.0 2018-05-12 =
 * Initial Release.
